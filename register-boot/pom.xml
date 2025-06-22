@@ -96,7 +96,7 @@
             <dependency>
                 <groupId>de.awtools</groupId>
                 <artifactId>registrationservice-parent</artifactId>
-                <version>0.4.0</version>
+                <version>0.5.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
