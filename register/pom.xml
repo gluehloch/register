@@ -9,9 +9,11 @@
         <version>15-java21</version>
     </parent>
 
+    <groupId>de.awtools</groupId>
     <artifactId>registrationservice</artifactId>
     <name>Registration REST API project (Core Implementation)</name>
     <packaging>jar</packaging>
+    <version>0.5.0-SNAPSHOT</version>
 
     <properties>
         <slf4j.version>2.0.9</slf4j.version>
