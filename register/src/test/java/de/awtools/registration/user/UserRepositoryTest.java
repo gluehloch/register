@@ -3,36 +3,22 @@ package de.awtools.registration.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.env.Environment;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import de.awtools.registration.Tags;
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 
-@ActiveProfiles("test")
+@RegisterTestConfig
 @WebAppConfiguration
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
 @Transactional
 @Rollback
 class UserRepositoryTest {
@@ -100,10 +86,10 @@ class UserRepositoryTest {
         PrivilegeEntity readPriv = PrivilegeEntity.PrivilegeBuilder.of("READ_PRIV");
         PrivilegeEntity persistedReadPriv = privilegeRepository.save(readPriv);
         assertThat(persistedReadPriv.getName()).isEqualTo("READ_PRIV");
-        
+
         PrivilegeEntity writePriv = PrivilegeEntity.PrivilegeBuilder.of("WRITE_PRIV");
         privilegeRepository.save(writePriv);
-        
+
         UserAccountEntity frosch = UserAccountEntity.UserAccountBuilder
                 .of("Frosch", "PasswordFrosch")
                 .firstname("Andre")
@@ -111,14 +97,14 @@ class UserRepositoryTest {
                 .created(LocalDateTime.now())
                 .email(Email.of("mail@mail.de"))
                 .build();
-        
+
         RoleEntity role = RoleEntity.RoleBuilder.of("ADMIN");
         role.addPrivilege(readPriv);
         role.addPrivilege(writePriv);
-        roleRepository.save(role); 
+        roleRepository.save(role);
         frosch.addRole(role);
         userAccountRepository.save(frosch);
-        
+
         UserAccountEntity user = userAccountRepository.findByNickname("Frosch").orElseThrow();
         assertThat(user.hasRole(role)).isTrue();
     }

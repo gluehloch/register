@@ -9,28 +9,22 @@ import jakarta.servlet.ServletContext;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 import de.awtools.registration.register.RegistrationController;
 
 @WebAppConfiguration
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
 @Rollback
+@RegisterTestConfig
 public class WebMvcTest {
 
     @Autowired
@@ -54,7 +48,7 @@ public class WebMvcTest {
 
         MvcResult result = mockMvc
                 .perform(get("/ping")
-                        .header(HttpHeaders.CONTENT_TYPE,"application/json")
+                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
                         .header(HttpHeaders.ACCEPT_CHARSET, "charset", "UTF-8"))
                 .andDo(print())
                 .andExpect(status().isOk()).andReturn();

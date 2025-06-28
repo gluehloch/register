@@ -8,27 +8,21 @@ import java.util.Optional;
 import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 import de.awtools.registration.user.ApplicationEntity;
 import de.awtools.registration.user.ApplicationRepository;
 import de.awtools.registration.user.Email;
 import de.awtools.registration.user.Password;
 import de.awtools.registration.user.UserAccountEntity;
 
+@RegisterTestConfig
 @WebAppConfiguration
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
 @Transactional
 @Rollback
 public class RegistrationServiceTest {
@@ -61,7 +55,7 @@ public class RegistrationServiceTest {
         application.setName("applicationName");
         application.setDescription("Test Application for some JUnit tests.");
         applicationRepository.save(application);
-        
+
         //registrationRepository.deleteAll();
         Optional<RegistrationEntity> validateRegistration = registrationRepository.findByNickname("Frosch");
         validateRegistration.ifPresent(RegistrationServiceTest::throwException);
@@ -84,9 +78,10 @@ public class RegistrationServiceTest {
         assertThat(restartUserAccount.getValidationCodes()).hasSize(1);
         assertThat(restartUserAccount.getValidationCodes()).contains(Validation.ValidationCode.OK);
     }
-    
+
     public static void throwException(RegistrationEntity registrationEntity) {
-    	throw new IllegalStateException(String.format("User registration of user with nickname '%s' shoud not be there.", registrationEntity.getNickname()));
+        throw new IllegalStateException(String.format(
+                "User registration of user with nickname '%s' shoud not be there.", registrationEntity.getNickname()));
     }
 
     @Test
