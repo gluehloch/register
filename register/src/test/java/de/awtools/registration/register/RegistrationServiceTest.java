@@ -81,7 +81,7 @@ public class RegistrationServiceTest {
 
     public static void throwException(RegistrationEntity registrationEntity) {
         throw new IllegalStateException(String.format(
-                "User registration of user with nickname '%s' shoud not be there.", registrationEntity.getNickname()));
+                "User registration of user with nickname '%s' should not be there.", registrationEntity.getNickname()));
     }
 
     @Test
