@@ -1,10 +1,16 @@
 CREATE DATABASE `registertest` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-REVOKE ALL PRIVILEGES ON * . * FROM 'register'@'localhost';
-REVOKE ALL PRIVILEGES ON * . * FROM 'register'@'%';
+CREATE USER 'register-test'@'localhost' IDENTIFIED BY 'xxx';
+CREATE USER 'register-test'@'%' IDENTIFIED BY 'xxx';
 
-REVOKE ALL PRIVILEGES ON * . * FROM 'registersu'@'localhost';
-REVOKE ALL PRIVILEGES ON * . * FROM 'registersu'@'%';
+CREATE USER 'register-testsu'@'localhost' IDENTIFIED BY 'xxx';
+CREATE USER 'register-testsu'@'%' IDENTIFIED BY 'xxx';
+
+REVOKE ALL PRIVILEGES ON * . * FROM 'register-test'@'localhost';
+REVOKE ALL PRIVILEGES ON * . * FROM 'register-test'@'%';
+
+REVOKE ALL PRIVILEGES ON * . * FROM 'register-testsu'@'localhost';
+REVOKE ALL PRIVILEGES ON * . * FROM 'register-testsu'@'%';
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON registertest.* TO 'register'@'localhost'
   WITH GRANT OPTION
@@ -24,7 +30,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,
   ALTER, INDEX, DROP, CREATE TEMPORARY TABLES, SHOW VIEW,
   CREATE ROUTINE, ALTER ROUTINE, EXECUTE, CREATE VIEW, EVENT, TRIGGER,
   LOCK TABLES
-  ON registertest.* TO 'registersu'@'localhost'
+  ON registertest.* TO 'register-testsu'@'localhost'
   WITH GRANT OPTION
   MAX_QUERIES_PER_HOUR 0
   MAX_CONNECTIONS_PER_HOUR 0
@@ -35,7 +41,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,
   ALTER, INDEX, DROP, CREATE TEMPORARY TABLES, SHOW VIEW,
   CREATE ROUTINE, ALTER ROUTINE, EXECUTE, CREATE VIEW, EVENT, TRIGGER,
   LOCK TABLES
-  ON registertest.* TO 'registersu'@'%'
+  ON registertest.* TO 'register-testsu'@'%'
   WITH GRANT OPTION
   MAX_QUERIES_PER_HOUR 0
   MAX_CONNECTIONS_PER_HOUR 0
