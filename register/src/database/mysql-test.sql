@@ -1,20 +1,26 @@
 DROP DATABASE IF EXISTS `registertest`;
 CREATE DATABASE `registertest` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-REVOKE ALL PRIVILEGES ON * . * FROM 'register-test'@'localhost';
-REVOKE ALL PRIVILEGES ON * . * FROM 'register-test'@'%';
+CREATE USER 'registertest'@'localhost' IDENTIFIED BY 'xxx';
+CREATE USER 'registertest'@'%' IDENTIFIED BY 'xxx';
 
-REVOKE ALL PRIVILEGES ON * . * FROM 'register-testsu'@'localhost';
-REVOKE ALL PRIVILEGES ON * . * FROM 'register-testsu'@'%';
+CREATE USER 'registertestsu'@'localhost' IDENTIFIED BY 'xxx';
+CREATE USER 'registertestsu'@'%' IDENTIFIED BY 'xxx';
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON registertest.* TO 'register-test'@'localhost'
+REVOKE ALL PRIVILEGES ON * . * FROM 'registertest'@'localhost';
+REVOKE ALL PRIVILEGES ON * . * FROM 'registertest'@'%';
+
+REVOKE ALL PRIVILEGES ON * . * FROM 'registertestsu'@'localhost';
+REVOKE ALL PRIVILEGES ON * . * FROM 'registertestsu'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON registertest.* TO 'registertest'@'localhost'
   WITH GRANT OPTION
   MAX_QUERIES_PER_HOUR 0
   MAX_CONNECTIONS_PER_HOUR 0
   MAX_UPDATES_PER_HOUR 0
   MAX_USER_CONNECTIONS 0;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON registertest.* TO 'register-test'@'%'
+GRANT SELECT, INSERT, UPDATE, DELETE ON registertest.* TO 'registertest'@'%'
   WITH GRANT OPTION
   MAX_QUERIES_PER_HOUR 0
   MAX_CONNECTIONS_PER_HOUR 0
@@ -25,7 +31,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,
   ALTER, INDEX, DROP, CREATE TEMPORARY TABLES, SHOW VIEW,
   CREATE ROUTINE, ALTER ROUTINE, EXECUTE, CREATE VIEW, EVENT, TRIGGER,
   LOCK TABLES
-  ON registertest.* TO 'register-testsu'@'localhost'
+  ON registertest.* TO 'registertestsu'@'localhost'
   WITH GRANT OPTION
   MAX_QUERIES_PER_HOUR 0
   MAX_CONNECTIONS_PER_HOUR 0
@@ -36,7 +42,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,
   ALTER, INDEX, DROP, CREATE TEMPORARY TABLES, SHOW VIEW,
   CREATE ROUTINE, ALTER ROUTINE, EXECUTE, CREATE VIEW, EVENT, TRIGGER,
   LOCK TABLES
-  ON registertest.* TO 'register-testsu'@'%'
+  ON registertest.* TO 'registertestsu'@'%'
   WITH GRANT OPTION
   MAX_QUERIES_PER_HOUR 0
   MAX_CONNECTIONS_PER_HOUR 0
