@@ -10,23 +10,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
+@RegisterTestConfig
 @WebAppConfiguration
 public class CookieControllerTest {
 
@@ -57,7 +51,8 @@ public class CookieControllerTest {
     private static class MyExceptionResolver implements HandlerExceptionResolver {
 
         @Override
-        public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+                Exception ex) {
             // TODO Auto-generated method stub
             return null;
         }

@@ -4,11 +4,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import jakarta.persistence.EntityManagerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -21,27 +22,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import jakarta.persistence.EntityManagerFactory;
-
 /**
- * Registration Service Configuration Factory.
- * <br/>
- * Remember: The last property source wins on property name clash!
- * <br/>
+ * Registration Service Configuration Factory. <br/>
+ * Remember: The last property source wins on property name clash! <br/>
  * {@code /register.properties} must be located under {@link src/test/resources}.
  *
  * @author Andre Winkler
  */
 @Configuration
-@PropertySource(ignoreResourceNotFound = true, value = {
-		"file:${AWTOOLS_CONFDIR}/register/register.properties",
-        "file:${user.home}/.register.properties",
-        "classpath:/register.properties" // classppath:/register.properties wins every time!
-})
 @EnableTransactionManagement
 @ComponentScan("de.awtools.registration")
 @EnableJpaRepositories(basePackages = { "de.awtools.registration" })
-public class PersistenceJPAConfig {
+public class PersistenceJPAConfiguration {
 
     @Autowired
     private PersistenceConfiguration persistenceConfiguration;
@@ -60,32 +52,17 @@ public class PersistenceJPAConfig {
 
     @Bean
     public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
-      HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 
-      LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-      factory.setJpaVendorAdapter(vendorAdapter);
-      factory.setPackagesToScan("de.awtools.registration");
-      factory.setDataSource(dataSource);
-      factory.setJpaProperties(additionalProperties());
-      factory.afterPropertiesSet();
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("de.awtools.registration");
+        factory.setDataSource(dataSource);
+        factory.setJpaProperties(additionalProperties());
+        factory.afterPropertiesSet();
 
-      return factory.getObject();
+        return factory.getObject();
     }
-
-    /*
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "de.awtools.registration" });
-
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
-
-        return em;
-    }
-    */
 
     @Bean
     public DataSource dataSource() {

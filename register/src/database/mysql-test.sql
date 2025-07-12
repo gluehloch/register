@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `registertest`;
 CREATE DATABASE `registertest` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE USER 'registertest'@'localhost' IDENTIFIED BY 'xxx';

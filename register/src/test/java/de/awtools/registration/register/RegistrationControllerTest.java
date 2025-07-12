@@ -13,14 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,14 +27,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 import de.awtools.registration.user.ApplicationEntity;
 import de.awtools.registration.user.ApplicationRepository;
 import de.awtools.registration.user.UserAccountRepository;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
+@RegisterTestConfig
 @WebAppConfiguration
 @Transactional
 @Rollback
@@ -91,8 +85,7 @@ class RegistrationControllerTest {
      * Die Annotation {@code @Transactional} sorgt dafuer, dass die angelegten Testdaten nach Testausfuehrung zurueck
      * gerollt werden.
      * 
-     * @throws Exception
-     *             ...
+     * @throws Exception ...
      */
     @Tag("registration")
     @Tag("controller")
@@ -129,7 +122,7 @@ class RegistrationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("validationCodes", Matchers.hasSize(1)))
                 .andExpect(jsonPath("validationCodes", Matchers.contains("OK")));
-        
+
         RegistrationEntity registrationEntity = registrationRepository.findByNickname(FROSCH).orElseThrow();
         assertThat(registrationEntity.getNickname()).isEqualTo(FROSCH);
         assertThat(registrationEntity.getApplication()).isEqualTo("application");
@@ -153,8 +146,8 @@ class RegistrationControllerTest {
         registration.setEmail("test@test.de");
 
         mockMvc.perform(post("/registration/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toString(registration)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toString(registration)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("validationCodes", Matchers.hasSize(1)))
@@ -183,8 +176,7 @@ class RegistrationControllerTest {
      * Die Annotation {@code @Transactional} sorgt dafuer, dass die angelegten Testdaten nach Testausfuehrung zurueck
      * gerollt werden.
      * 
-     * @throws Exception
-     *             ...
+     * @throws Exception ...
      */
     @Tag("registration")
     @Tag("controller")
@@ -202,7 +194,7 @@ class RegistrationControllerTest {
         registration.setName("Winkler");
         registration.setPassword("secret-password");
         registration.setEmail("test(at)test.de");
-      
+
         MvcResult result = mockMvc.perform(post("/registration/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toString(registration)))
@@ -211,7 +203,7 @@ class RegistrationControllerTest {
                 .andExpect(jsonPath("validationCodes", Matchers.hasSize(1)))
                 .andExpect(jsonPath("validationCodes", Matchers.contains("EMAIL_IS_NOT_VALID")))
                 .andReturn();
-        
+
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -220,8 +212,7 @@ class RegistrationControllerTest {
      * Die Annotation {@code @Transactional} sorgt dafuer, dass die angelegten Testdaten nach Testausfuehrung zurueck
      * gerollt werden.
      *
-     * @throws Exception
-     *             ...
+     * @throws Exception ...
      */
     @Tag("registration")
     @Tag("controller")
@@ -241,8 +232,8 @@ class RegistrationControllerTest {
         registration.setEmail("test@test.de");
 
         mockMvc.perform(post("/registration/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toString(registration)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toString(registration)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("validationCodes", Matchers.hasSize(1)))
@@ -267,8 +258,8 @@ class RegistrationControllerTest {
         registration.setEmail("test@test.de");
 
         mockMvc.perform(post("/registration/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toString(registration)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toString(registration)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("validationCodes", Matchers.hasSize(1)))

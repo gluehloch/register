@@ -5,19 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 import de.awtools.registration.user.Password;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
+@RegisterTestConfig
 @WebAppConfiguration
 public class PasswordEncodeTest {
 
@@ -55,5 +49,5 @@ public class PasswordEncodeTest {
         assertThat(passwordToValidate).isEqualTo(password);
         assertThat(passwordEncoderWrapper.validate(password, passwordToValidate)).isTrue();
     }
-    
+
 }
