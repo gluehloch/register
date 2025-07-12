@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource(ignoreResourceNotFound = true, value = {
         "classpath:/register-test.properties",
-        "file:${user.home}/.register-test.properties",
+        "file:${user.home}/.awitools/.register-test.properties",
 })
 public class TestPropertiesConfiguration {
 
