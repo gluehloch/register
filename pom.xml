@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.awtools</groupId>
         <artifactId>master-pom</artifactId>
-        <version>15-java21</version>
+        <version>16-java25</version>
     </parent>
 
     <artifactId>registrationservice-parent</artifactId>
@@ -23,8 +23,8 @@
         <com.fasterxml.jackson.core.jackson-core.version>2.18.3</com.fasterxml.jackson.core.jackson-core.version>
         <com.fasterxml.jackson.core.jackson-databind.version>2.18.3</com.fasterxml.jackson.core.jackson-databind.version>
         <springfox.version>3.0.0</springfox.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         
         <register.version>0.5.0-SNAPSHOT</register.version>
     </properties>
