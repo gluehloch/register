@@ -23,6 +23,12 @@ curl -d '{"nickname": "nickname", "name": "name", "firstname": "firstname", "ema
   http://cookie.gluehloch.de/registrationservice/api/registration/validate
 
 ###
+GET http://127.0.0.1:7777/register/version HTTP/1.1
+
+###
+GET http://127.0.0.1:7777/register/ping HTTP/1.1
+
+###
 
 GET http://127.0.0.1:9090/registrationservice/api/registration/ping HTTP/1.1
 content-type: application/json

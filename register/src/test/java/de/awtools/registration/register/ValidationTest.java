@@ -13,14 +13,10 @@ import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,16 +25,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 import de.awtools.registration.user.ApplicationEntity;
 import de.awtools.registration.user.ApplicationRepository;
 
+@RegisterTestConfig
 @WebAppConfiguration
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
 @Rollback
-public class ValidationTest {
+class ValidationTest {
 
     @Autowired
     private ApplicationRepository applicationRepository;
@@ -55,12 +49,12 @@ public class ValidationTest {
     }
 
     @AfterEach
-    public void teardown() throws Exception {
+    void teardown() throws Exception {
         MockitoAnnotations.openMocks(this).close();
     }
 
     @Test
-    public void ping() throws Exception {
+    void ping() throws Exception {
         ServletContext context = webAppContext.getServletContext();
 
         assertThat(context).isNotNull().isInstanceOf(MockServletContext.class);
@@ -81,7 +75,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validateUnknownApplication() throws Exception {
+    void validateUnknownApplication() throws Exception {
         // ServletContext context = webAppContext.getServletContext();
 
         RegistrationJson registration = new RegistrationJson();
@@ -114,7 +108,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validateKnownApplication() throws Exception {
+    void validateKnownApplication() throws Exception {
         applicationRepository.deleteAll();
 
         ApplicationEntity application = new ApplicationEntity();

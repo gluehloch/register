@@ -37,9 +37,9 @@ public class PingController {
     }
 
     private final PersistenceConfiguration config;
-    
+
     public PingController(PersistenceConfiguration config) {
-    	this.config = config;
+        this.config = config;
     }
 
     /**
@@ -48,15 +48,14 @@ public class PingController {
      * @return A version String.
      */
     // @ApiOperation(value = "version", nickname = "version", response = String.class)
-    @CrossOrigin
+    @CrossOrigin(origins = "http://andre-winkler.de")
     @GetMapping(path = "/version", produces = HttpConst.JSON_UTF_8)
     public VersionJson versionInfo() {
         return PingController.VERSION_JSON;
     }
 
     /**
-     * Starts the registration process. The caller receives an email with an URL
-     * to confirm his address.
+     * Starts the registration process. The caller receives an email with an URL to confirm his address.
      *
      * @return Web-Service reachable?
      */
@@ -74,9 +73,7 @@ public class PingController {
     @CrossOrigin
     @GetMapping(path = "/database", produces = HttpConst.JSON_UTF_8)
     public String database() {
-    	return config.getUrl();
+        return config.getUrl();
     }
 
 }
-
-

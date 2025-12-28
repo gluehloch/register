@@ -29,95 +29,95 @@ public class SimulateJwtLifecycleTest {
 
     @Disabled("TODO")
     @Tag("TODO")
-	@Test
-	public void readPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-		InputStream privateKeyIs = SimulateJwtLifecycleTest.class.getResourceAsStream("register_id_rsa");
-		assertThat(privateKeyIs).isNotNull();
+    @Test
+    public void readPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        InputStream privateKeyIs = SimulateJwtLifecycleTest.class.getResourceAsStream("register_id_rsa");
+        assertThat(privateKeyIs).isNotNull();
 
-		byte[] targetArray = new byte[privateKeyIs.available()];
-		privateKeyIs.read(targetArray);
+        byte[] targetArray = new byte[privateKeyIs.available()];
+        privateKeyIs.read(targetArray);
 
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(targetArray);
-		PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(targetArray);
+        PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
 
-		assertThat(privateKey).isNotNull();
-	}
-	
-    @Disabled("TODO")
-    @Tag("TODO")
-	@Test
-	public void readPrivateKey2() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-		InputStream privateKeyIs = SimulateJwtLifecycleTest.class.getResourceAsStream("register_id_rsa_pkcs8");
-		assertThat(privateKeyIs).isNotNull();
-
-		byte[] targetArray = new byte[privateKeyIs.available()];
-		privateKeyIs.read(targetArray);
-
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(targetArray);
-		PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
-
-		assertThat(privateKey).isNotNull();
-	}
+        assertThat(privateKey).isNotNull();
+    }
 
     @Disabled("TODO")
     @Tag("TODO")
-	@Test
-	public void xxx() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
+    @Test
+    public void readPrivateKey2() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        InputStream privateKeyIs = SimulateJwtLifecycleTest.class.getResourceAsStream("register_id_rsa_pkcs8");
+        assertThat(privateKeyIs).isNotNull();
 
-		Security.addProvider(new BouncyCastleProvider());
+        byte[] targetArray = new byte[privateKeyIs.available()];
+        privateKeyIs.read(targetArray);
 
-//        InputStream privateKeyIs = SimulateJwtLifecycleTest.class
-//                .getResourceAsStream("register_id_rsa");
-//        assertThat(privateKeyIs).isNotNull();
-//
-//        byte[] targetArray = new byte[privateKeyIs.available()];
-//        privateKeyIs.read(targetArray);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(targetArray);
+        PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
 
-//        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(targetArray);
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
+        assertThat(privateKey).isNotNull();
+    }
 
-		PrivateKey privateKey = generatePrivateKey(keyFactory);
+    @Disabled("TODO")
+    @Tag("TODO")
+    @Test
+    public void xxx() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
 
-		// PrivateKey privateKey1 = keyFactory.generatePrivate(spec);
+        Security.addProvider(new BouncyCastleProvider());
 
-		// PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(targetArray);
-		// PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+        //        InputStream privateKeyIs = SimulateJwtLifecycleTest.class
+        //                .getResourceAsStream("register_id_rsa");
+        //        assertThat(privateKeyIs).isNotNull();
+        //
+        //        byte[] targetArray = new byte[privateKeyIs.available()];
+        //        privateKeyIs.read(targetArray);
 
-		assertThat(privateKey).isNotNull();
-	}
+        //        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(targetArray);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
 
-	private static PrivateKey generatePrivateKey(KeyFactory factory) throws InvalidKeySpecException, IOException {
+        PrivateKey privateKey = generatePrivateKey(keyFactory);
 
-		PemFile pemFile = new PemFile();
-		byte[] content = pemFile.getPemObject().getContent();
-		PKCS8EncodedKeySpec privKeySpec = new PKCS8EncodedKeySpec(content);
-		return factory.generatePrivate(privKeySpec);
-	}
+        // PrivateKey privateKey1 = keyFactory.generatePrivate(spec);
 
-	@Test
-	public void generatePrivateKey() {
-		try {
-			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA", "SUN");
+        // PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(targetArray);
+        // PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
 
-			// Initialize KeyPairGenerator.
-			SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-			keyGen.initialize(1024, random);
+        assertThat(privateKey).isNotNull();
+    }
 
-			// Generate Key Pairs, a private key and a public key.
-			KeyPair keyPair = keyGen.generateKeyPair();
-			PrivateKey privateKey = keyPair.getPrivate();
-			PublicKey publicKey = keyPair.getPublic();
+    private static PrivateKey generatePrivateKey(KeyFactory factory) throws InvalidKeySpecException, IOException {
 
-			Base64.Encoder encoder = Base64.getEncoder();
-			System.out.println("privateKey: " + encoder.encodeToString(privateKey.getEncoded()));
-			System.out.println("publicKey: " + encoder.encodeToString(publicKey.getEncoded()));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		}
-	}
+        PemFile pemFile = new PemFile();
+        byte[] content = pemFile.getPemObject().getContent();
+        PKCS8EncodedKeySpec privKeySpec = new PKCS8EncodedKeySpec(content);
+        return factory.generatePrivate(privKeySpec);
+    }
+
+    @Test
+    public void generatePrivateKey() {
+        try {
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA", "SUN");
+
+            // Initialize KeyPairGenerator.
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+            keyGen.initialize(1024, random);
+
+            // Generate Key Pairs, a private key and a public key.
+            KeyPair keyPair = keyGen.generateKeyPair();
+            PrivateKey privateKey = keyPair.getPrivate();
+            PublicKey publicKey = keyPair.getPublic();
+
+            Base64.Encoder encoder = Base64.getEncoder();
+            System.out.println("privateKey: " + encoder.encodeToString(privateKey.getEncoded()));
+            System.out.println("publicKey: " + encoder.encodeToString(publicKey.getEncoded()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

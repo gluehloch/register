@@ -12,37 +12,31 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import de.awtools.registration.Tags;
-import de.awtools.registration.config.PersistenceJPAConfig;
+import de.awtools.registration.config.RegisterTestConfig;
 import de.awtools.registration.user.ApplicationEntity.ApplicationBuilder;
 import de.awtools.registration.user.PrivilegeEntity.PrivilegeBuilder;
 import de.awtools.registration.user.RoleEntity.RoleBuilder;
 
+@RegisterTestConfig
 @WebAppConfiguration
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
-@ComponentScan("de.awtools.registration")
 @Transactional
 @Rollback
-public class BetofficeApplicationUserRoleTest {
+class BetofficeApplicationUserRoleTest {
 
     @Autowired
     private ApplicationRepository applicationRepository;
 
     @Autowired
     private PrivilegeRepository privilegeRepository;
-    
+
     @Autowired
     private RoleRepository roleRepository;
-    
+
     @Autowired
     private UserAccountRepository userAccountRepository;
 
@@ -80,9 +74,8 @@ public class BetofficeApplicationUserRoleTest {
         PrivilegeEntity updateCommunity = PrivilegeBuilder.of("UPDATE community");
         PrivilegeEntity deleteCommunity = PrivilegeBuilder.of("DELETE community");
         PrivilegeEntity readCommunity = PrivilegeBuilder.of("READ community");
-        
-        List<PrivilegeEntity> createUpdateDeleteReadSeason =
-            List.of(createSeason, updateSeason, deleteSeason,
+
+        List<PrivilegeEntity> createUpdateDeleteReadSeason = List.of(createSeason, updateSeason, deleteSeason,
                 createRound, updateRound, deleteRound, readRound,
                 createGame, updateGame, deleteGame, readGame);
         privilegeRepository.saveAll(
@@ -91,14 +84,14 @@ public class BetofficeApplicationUserRoleTest {
         RoleEntity adminRole = RoleBuilder.of("ADMIN");
         RoleEntity communityManagerRole = RoleBuilder.of("Community Manager");
         RoleEntity tipperRole = RoleBuilder.of("Tipper");
-        
+
         roleRepository.saveAll(List.of(adminRole, communityManagerRole, tipperRole));
-        
+
         adminRole.addPrivileges(createUpdateDeleteReadSeason);
 
         privilegeRepository.saveAll(
                 List.of(createCommunity, updateCommunity, deleteCommunity, readCommunity));
-        
+
         adminRole.addPrivilege(createSeason, updateSeason, deleteSeason);
         adminRole.addPrivilege(createRound, updateRound, deleteRound, readRound);
         adminRole.addPrivilege(createGame, updateGame, deleteGame, readGame);
@@ -106,7 +99,8 @@ public class BetofficeApplicationUserRoleTest {
 
         communityManagerRole.addPrivilege(updateCommunity, readCommunity);
 
-        tipperRole.addPrivilege(readSeason, readRound, readGame, readTipp, createTipp, updateTipp, deleteTipp, readCommunity);
+        tipperRole.addPrivilege(readSeason, readRound, readGame, readTipp, createTipp, updateTipp, deleteTipp,
+                readCommunity);
 
         roleRepository.save(adminRole);
         roleRepository.save(communityManagerRole);
