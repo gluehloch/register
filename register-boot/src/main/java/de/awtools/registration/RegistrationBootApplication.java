@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
-@ComponentScan(basePackages = {"de.awtools.registration"}) 
+@ComponentScan(basePackages = {"de.awtools.registration"})
 public class RegistrationBootApplication {
 
     public static void main(String[] args) {

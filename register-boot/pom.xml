@@ -15,6 +15,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
+		<springdoc.version>2.8.14</springdoc.version>
 		<slf4j.version>2.0.9</slf4j.version>
 		<org.springframework.version>6.2.15</org.springframework.version>
 		<org.springframework.spring-data-jpa.version>3.5.71</org.springframework.spring-data-jpa.version>
@@ -94,6 +95,14 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-bom</artifactId>
+				<version>${springdoc.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
 				<groupId>de.awtools</groupId>
 				<artifactId>registrationservice-parent</artifactId>
 				<version>0.5.0-SNAPSHOT</version>
@@ -120,8 +129,8 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.8.14</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

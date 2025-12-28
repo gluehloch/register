@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("production")
+// @Profile("production")
 public class MailConfigurationImpl implements MailConfiguration {
 
     @Value("${register.mail.smtp.auth}")
