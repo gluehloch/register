@@ -20,7 +20,7 @@
         <org.springframework.spring-data-jpa.version>3.4.3</org.springframework.spring-data-jpa.version>
         <org.hibernate.version>6.6.5.Final</org.hibernate.version>
         <com.fasterxml.jackson.core.jackson-annotations.version>2.18.3</com.fasterxml.jackson.core.jackson-annotations.version>
-        <com.fasterxml.jackson.core.jackson-core.version>2.18.3</com.fasterxml.jackson.core.jackson-core.version>
+        <com.fasterxml.jackson.core.jackson-core.version>2.18.6</com.fasterxml.jackson.core.jackson-core.version>
         <com.fasterxml.jackson.core.jackson-databind.version>2.18.3</com.fasterxml.jackson.core.jackson-databind.version>
         <springfox.version>3.0.0</springfox.version>
         <maven.compiler.source>25</maven.compiler.source>
